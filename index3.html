@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 3</title>
+</head>
+<style>
+    body {
+        background-color: antiquewhite;
+        font-weight: 500;
+        font-size: 12px;
+    }
+</style>
+<body>
+    <form id="userForm">
+        <table>
+            <tr>
+                <td><label for="firstName">Firstname: </label><input type="text" id="firstName"></td>
+                <td><label for="lastName">Lastname: </label><input type="text" id="lastName"></td>
+            </tr>
+            <tr>
+                <td><label for="birthday">Birthday: </label><input type="date" id="birthday"></td>
+                <td>
+                    <label>Gender: </label>
+                    <label for="male"><input type="radio" name="gender" id="male" value="Male">Male</label>
+                    <label for="female"><input type="radio" name="gender" id="female" value="Female">Female</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="country">Country:</label>
+                    <select id="country">
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="UK">UK</option>
+                        <option value="France">France</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </td>
+                <td>
+                    <label for="city">City:</label>
+                    <select id="city">
+                        <option value="Odesa">Odesa</option>
+                        <option value="London">London</option>
+                        <option value="Paris">Paris</option>
+                        <option value="Tokyo">Tokyo</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <div id="skills">
+            <label>Skills:</label>
+            <div>
+                <input type="checkbox" id="HTML" value="HTML"><label for="HTML">HTML</label>
+                <input type="checkbox" id="CSS" value="CSS"><label for="CSS">CSS</label>
+                <input type="checkbox" id="JS" value="JS"><label for="JS">JS</label>
+                <input type="checkbox" id="PHP" value="PHP"><label for="PHP">PHP</label>
+                <input type="checkbox" id="C++" value="C++"><label for="C++">C++</label>
+                <input type="checkbox" id="JAVA" value="JAVA"><label for="JAVA">JAVA</label>
+                <input type="checkbox" id="C#" value="C#"><label for="C#">C#</label>
+            </div>
+        </div>
+        <button type="button" id="saveBtn">Save</button>
+        <p>Result: </p>
+    </form>
+
+    <script>
+        document.getElementById("saveBtn").addEventListener("click", () =>
+        {
+            const formData =
+            {
+                firstName: document.getElementById("firstName").value.trim(),
+                lastName: document.getElementById("lastName").value.trim(),
+                birthday: document.getElementById("birthday").value,
+                gender: document.querySelector("input[name='gender']:checked")?.value || "",
+                country: document.getElementById("country").value,
+                city: document.getElementById("city").value,
+                skills: Array.from(document.querySelectorAll("#skills input:checked"))
+                    .map(skill => skill.value)
+                    .join(", ")
+            };
+
+            createInfoTable(formData);
+        });
+
+        function createInfoTable(data) {
+            const table = document.createElement("table");
+            table.className = "infoTable";
+
+            for (const [key, value] of Object.entries(data))
+            {
+                const row = document.createElement("tr");
+                const titleCell = document.createElement("td");
+                titleCell.className = "titleTd";
+                titleCell.textContent = capitalize(key);
+
+                const valueCell = document.createElement("td");
+                valueCell.className = "valueTd";
+                valueCell.textContent = value;
+
+                row.appendChild(titleCell);
+                row.appendChild(valueCell);
+                table.appendChild(row);
+            }
+
+            document.body.appendChild(table);
+        }
+
+        function capitalize(str)
+        {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+    </script>
+</body>
+
+</html>

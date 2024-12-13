@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 5</title>
+</head>
+<style>
+    body {
+        background-color: antiquewhite;
+        margin: 0;
+        padding: 0;
+    }
+
+    main {
+        width: 100%;
+        max-width: 600px;
+        padding: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    #questionsContainer {
+        border-top: 2px solid lightgray;
+        padding-top: 10px;
+        margin-bottom: 30px;
+    }
+
+    .question {
+        border-top: 1px solid lightgray;
+        padding: 10px 0;
+    }
+
+    .question p {
+        margin: 5px 0;
+        line-height: 1.4;
+    }
+
+    .question .questionTitle {
+        text-decoration: underline;
+        font-weight: bold;
+    }
+
+    #formSection {
+        border-top: 2px solid lightgray;
+        padding-top: 20px;
+    }
+
+    .formGroup {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: gray;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <main>
+        <section id="questionsSection">
+            <h2>All Questions:</h2>
+            <div id="questionsContainer"></div>
+        </section>
+        <section id="formSection">
+            <h2>Add New Question:</h2>
+            <form id="questionForm">
+                <div class="formGroup">
+                    <label for="question">Question:</label>
+                    <input type="text" id="question" name="question">
+                </div>
+                <div class="formGroup">
+                    <label for="correctAnswer">Correct Answer:</label>
+                    <input type="text" id="correctAnswer" name="correctAnswer">
+                </div>
+                <div class="formGroup">
+                    <label for="wrongAnswer">Wrong Answer:</label>
+                    <input type="text" id="wrongAnswer" name="wrongAnswer">
+                </div>
+                <button type="button" id="addQuestionButton">Add</button>
+            </form>
+        </section>
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", () =>
+        {
+            const addQuestionButton = document.getElementById("addQuestionButton");
+            const questionsContainer = document.getElementById("questionsContainer");
+
+            function createQuestionElement(question, correct, wrong)
+            {
+                const questionWrapper = document.createElement("div");
+                questionWrapper.classList.add("questionWrapper");
+
+                const questionText = document.createElement("p");
+                questionText.textContent = question;
+                questionText.classList.add("questionText");
+
+                const correctAnswer = document.createElement("p");
+                correctAnswer.textContent = `Correct Answer: ${correct}`;
+                correctAnswer.classList.add("correctAnswer");
+
+                const wrongAnswer = document.createElement("p");
+                wrongAnswer.textContent = `Wrong Answer: ${wrong}`;
+                wrongAnswer.classList.add("wrongAnswer");
+
+                questionWrapper.appendChild(questionText);
+                questionWrapper.appendChild(correctAnswer);
+                questionWrapper.appendChild(wrongAnswer);
+
+                return questionWrapper;
+            }
+
+            function addQuestion()
+            {
+                const questionInput = document.getElementById("question");
+                const correctAnswerInput = document.getElementById("correctAnswer");
+                const wrongAnswerInput = document.getElementById("wrongAnswer");
+
+                const question = questionInput.value.trim();
+                const correct = correctAnswerInput.value.trim();
+                const wrong = wrongAnswerInput.value.trim();
+
+                if (question && correct && wrong)
+                {
+                    const questionElement = createQuestionElement(question, correct, wrong);
+                    questionsContainer.appendChild(questionElement);
+
+                    questionInput.value = "";
+                    correctAnswerInput.value = "";
+                    wrongAnswerInput.value = "";
+                } else
+                {
+                    alert("Please fill in all fields before adding a question!");
+                }
+            }
+
+            addQuestionButton.addEventListener("click", addQuestion);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 4</title>
+    <style>
+        body {
+        background-color: antiquewhite;
+    }
+    
+    .color {
+        width: 50px;
+        height: 50px;
+        background-color: rgb(165, 42, 42);
+        display: inline-block;
+        vertical-align: middle;
+    }
+    
+    p {
+        display: inline-block;
+        height: 50px;
+        line-height: 50px;
+        vertical-align: middle;
+        margin: 0 5px;
+    }
+    
+    .colorBlock {
+        width: 300px;
+        height: 50px;
+        border: 1px solid gray;
+        display: inline-block;
+        margin: 0 30px 20px 0;
+    }
+    
+    #wrapper {
+        width: 700px;
+        display: block;
+        margin: 0 auto;
+    }
+    
+    input {
+        width: 50px;
+    }
+    
+    #colorsValue {
+        border: 1px solid gray;
+        width: 250px;
+        padding: 5px;
+        margin-bottom: 20px;
+    }
+    
+    #colorForm {
+        width: 250px;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+    
+    #addColor {
+        width: 100%;
+        margin-top: 10px;
+        padding: 5px;
+        background-color: #f5f5f5;
+        border: 1px solid gray;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    </style>
+</head>
+
+<body>
+    <section id="colorForm">
+        <div id="colorsValue">
+            <label>R <input type="text" id="red" maxlength="3"></label>
+            <label>G <input type="text" id="green" maxlength="3"></label>
+            <label>B <input type="text" id="blue" maxlength="3"></label>
+        </div>
+        <button type="button" id="addColor">Add color</button>
+    </section>
+
+    <section id="wrapper"></section>
+
+    <script>
+        document.getElementById("addColor").addEventListener("click", () =>
+        {
+            const red = document.getElementById("red").value.trim();
+            const green = document.getElementById("green").value.trim();
+            const blue = document.getElementById("blue").value.trim();
+
+            if (isValidColorValue(red) && isValidColorValue(green) && isValidColorValue(blue))
+            {
+                createColorBlock(red, green, blue);
+            } else
+            {
+                alert("Please enter valid RGB values (0-255)!");
+            }
+        });
+
+        function isValidColorValue(value)
+        {
+            const num = parseInt(value, 10);
+            return !isNaN(num) && num >= 0 && num <= 255;   
+        }
+
+        function createColorBlock(r, g, b)
+        {
+            const wrapper = document.getElementById("wrapper");
+            const colorBlock = document.createElement("div");
+            colorBlock.className = "colorBlock";
+
+            const color = document.createElement("div");
+            color.className = "color";
+            color.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+
+            const description = document.createElement("p");
+            description.textContent = `RGB (${r}, ${g}, ${b})`;
+
+            colorBlock.append(color, description);
+            wrapper.appendChild(colorBlock);
+        }
+    </script>
+</body>
+
+</html>
